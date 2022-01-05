@@ -5,9 +5,9 @@ pygame.init()
 screen=pygame.display.set_mode((602,626))
 clock=pygame.time.Clock()
 pygame.display.set_caption("PACMAN")
-ch=int(raw_input("Enter map of choice: 1 or 2: "))
+ch=int(input("Enter map of choice: 1 or 2: "))
 back=pygame.image.load(str(ch)+".png")
-ch = int(raw_input("Enter no. of ghosts : 1 to 8: "))
+ch = int(input("Enter no. of ghosts : 1 to 8: "))
 back=back.convert()
 screen.blit(pygame.font.SysFont("comicsansms", 16).render("Use arrow keys to move.",True,(0,255,255)),(25,50))
 screen.blit(pygame.font.SysFont("comicsansms", 16).render("Blue dots enable you to send ghosts back to the centre.",True,(0,255,255)),(25,66))
@@ -22,8 +22,9 @@ screen.blit(pygame.font.SysFont("comicsansms", 16).render("Normal dot: 10 pts ; 
 screen.blit(pygame.font.SysFont("comicsansms", 16).render("1 second played: -10 pts, so try to finish as fast as you can.",True,(0,255,255)),(25,226))
 screen.blit(pygame.font.SysFont("comicsansms", 16).render("You need not hold the key to continue motion.",True,(0,255,255)),(25,258))
 screen.blit(pygame.font.SysFont("comicsansms", 16).render("A key can be pressed before a turn, and the turn is made when possible.",True,(0,255,255)),(25,274))
-screen.blit(pygame.font.SysFont("comicsansms", 16).render("For better challenge or higher score, try with 8 ghosts.",True,(0,255,255)),(25,306))
-screen.blit(pygame.font.SysFont("comicsansms", 16).render("Press any key to continue.",True,(0,255,255)),(25,338))
+screen.blit(pygame.font.SysFont("comicsansms", 16).render("For a better challenge or higher score, try with 8 ghosts.",True,(0,255,255)),(25,306))
+screen.blit(pygame.font.SysFont("comicsansms", 16).render("Be warned, the 8th ghost is black-coloured :)",True,(0,255,255)),(25,322))
+screen.blit(pygame.font.SysFont("comicsansms", 16).render("Press any key to continue.",True,(0,255,255)),(25,354))
 pygame.display.update()
 t=True
 while t==True:
@@ -41,12 +42,12 @@ for i in pacdotlist:
     pygame.draw.circle(screen,(255,255,255),i,2)
 c1=pygame.mixer.find_channel(False)
 c2=pygame.mixer.find_channel(False)
-backsound=pygame.mixer.Sound("Star_Wars_Imperial_March.wav")
+backsound=pygame.mixer.Sound("Star Wars - Imperial March.mp3")
 back2=pygame.mixer.Sound("back2.wav")
-laser=pygame.mixer.Sound("laser.wav")
-hammer=pygame.mixer.Sound("hammer.wav")                            
-WindowsHardwareFail=pygame.mixer.Sound("Windows Hardware Fail.wav")
-windowsding=pygame.mixer.Sound("Windows Ding.wav")
+laser=pygame.mixer.Sound("LASER.WAV")
+hammer=pygame.mixer.Sound("HAMMER.WAV")                            
+# WindowsHardwareFail=pygame.mixer.Sound("Hardware_Fail.wav")
+windowsding=pygame.mixer.Sound("Ding.wav")
 pygame.mixer.Sound.set_volume(backsound,0.25)
 pygame.mixer.Sound.set_volume(back2,0.25)
 pygame.mixer.Sound.set_volume(laser,0.25)
@@ -54,7 +55,7 @@ pygame.mixer.Sound.set_volume(windowsding,0.25)
 pygame.mixer.Sound.set_volume(hammer,0.25)
 pygame.mixer.Sound.set_volume(windowsding,0.25)
 Text=pygame.font.SysFont("comicsansms", 24).render("SCORE :",True,(0,255,255))
-screen.blit(Text,(0,597))
+screen.blit(Text,(0,605))
 pygame.display.update()
 eat=score=a=b=c=0
 backsound.play(loops=-1)
@@ -65,7 +66,7 @@ t=True
 def run():
 
     global c
-    screen.blit(pygame.font.SysFont("comicsansms", 25).render("READY",True,(0,255,255)),(260,280))
+    screen.blit(pygame.font.SysFont("comicsansms", 25).render("READY",True,(0,255,255)),(270,290))
     pygame.display.update()
     while c<500:
         clock.tick(100)
@@ -73,7 +74,7 @@ def run():
     
     while t:
 
-        global eat,a,b,c,Text
+        global eat,a,b,Text
 
 ##        if c==5500:
 ##            c1.stop()
@@ -96,14 +97,14 @@ def run():
         if eat==0:
             for i in pacmanlist:
                 if screen.get_at((int(i.x1+11),int(i.y1)))!=(255,255,0) or screen.get_at((int(i.x1-11),int(i.y1)))!=(255,255,0) or screen.get_at((int(i.x1),int(i.y1+11)))!=(255,255,0) or screen.get_at((int(i.x1),int(i.y1-11)))!=(255,255,0):
-                    WindowsHardwareFail.play(loops=2)
+                    # WindowsHardwareFail.play(loops=2)
                     Text=pygame.font.SysFont("comicsansms", 24).render("OOPS!!!",True,(255,255,0))
-                    print "You Lost"
+                    print("You Lost")
                     end()
         if pacdotlist==[] and bigpacdotlist==[]:
             windowsding.play()
             Text=pygame.font.SysFont("comicsansms", 24).render("You Won!!!",True,(255,255,0))
-            print "You Win"
+            print("You Win")
             end()
         a+=1
         c+=1
@@ -119,16 +120,16 @@ def run():
                         event_handler()
                 else:
                     if screen.get_at((int(i.x1+1),int(i.y1)))==(255,255,0) or screen.get_at((int(i.x1-1),int(i.y1)))==(255,255,0) or screen.get_at((int(i.x1),int(i.y1+1)))==(255,255,0) or screen.get_at((int(i.x1),int(i.y1-1)))==(255,255,0):
-                        WindowsHardwareFail.play(loops=2)
+                        # WindowsHardwareFail.play(loops=2)
                         Text=pygame.font.SysFont("comicsansms", 24).render("OOPS!!!",True,(255,255,0))
-                        print "You Lost"
+                        print("You Lost")
                         end()
             if a>(b+1000):
                 b=0
                 eat=2
                 event_handler()
-        screen.blit(Text,(0,597))
-        screen.blit(pygame.font.SysFont("comicsansms", 24).render(str(score-((a-10)/10)),True,(0,255,255)),(100,597))
+        screen.blit(Text,(0,605))
+        screen.blit(pygame.font.SysFont("comicsansms", 24).render(str(score-((a-10)/10)),True,(0,255,255)),(100,605))
         pygame.display.update()
 
 class mover(object):
@@ -196,15 +197,15 @@ class ghost(mover):
     def update(self):
 
         pygame.draw.circle(screen,self.colour,(int(self.x1),int(self.y1)),12)
-        print self,self.direc,self.direc_change
-        if self.direc=="L":
-            pygame.draw.circle(screen,(255,255,255),(int(self.x1)-3,int(self.y1)),2)
-        if self.direc=="R":
-            pygame.draw.circle(screen,(255,255,255),(int(self.x1)+3,int(self.y1)),2)
-        if self.direc=="U":
-            pygame.draw.circle(screen,(255,255,255),(int(self.x1),int(self.y1)-3),2)
-        if self.direc=="D":
-            pygame.draw.circle(screen,(255,255,255),(int(self.x1),int(self.y1)+3),2)
+        # print(self,self.direc,self.direc_change)
+        # if self.direc=="L":
+        #     pygame.draw.circle(screen,(255,255,255),(int(self.x1)-3,int(self.y1)),2)
+        # if self.direc=="R":
+        #     pygame.draw.circle(screen,(255,255,255),(int(self.x1)+3,int(self.y1)),2)
+        # if self.direc=="U":
+        #     pygame.draw.circle(screen,(255,255,255),(int(self.x1),int(self.y1)-3),2)
+        # if self.direc=="D":
+        #     pygame.draw.circle(screen,(255,255,255),(int(self.x1),int(self.y1)+3),2)
 
     def event_handler(self):
 
@@ -220,7 +221,8 @@ class ghost(mover):
         elif self.vx==-0.8 and self.vy==0:
             self.direc=random.choice(["U","L","D"])
         else:
-            print "a",self.vx,self.vy
+            # print("a",self.vx,self.vy)
+            pass
 
 class pacman(mover):
 
@@ -235,14 +237,14 @@ class pacman(mover):
 
     def update(self):
         
+        global score
         pygame.draw.circle(screen,(255,255,0),(int(self.x1),int(self.y1)),12)
         if (self.x1,self.y1) in pacdotlist:
-            global score
             pacdotlist.remove((self.x1,self.y1))
             score+=10
         if (self.x1,self.y1) in bigpacdotlist:
             laser.play()
-            global eat,b,charlist,score
+            global eat,b,charlist
             score+=500
             eat=1
             bigpacdotlist.remove((self.x1,self.y1))
@@ -276,7 +278,7 @@ def event_handler():
         if i.direc_change==False or (i.vx==0 and i.vy==0):
             ghost.event_handler(i)
     if eat==1:
-        screen.blit(pygame.font.SysFont("comicsansms", 24).render(str(10-((a-b)/100)),True,((a-b)*0.255,((10-((a-b)/100))%2)*255,((10-((a-b)/100))%2)*255)),(295,597))
+        screen.blit(pygame.font.SysFont("comicsansms", 24).render(str(int(10-((a-b)/100))),True,((a-b)*.255,((10-((a-b)//100))%2)*.255,((10-((a-b)//100))%2)*255)),(295,605))
     if eat==2:
         eat=0
         charlist=pacmanlist+ghostlist
@@ -302,7 +304,7 @@ def end():
     t=False
     b=a
     score-=(a/10)
-    print "Score:",score
+    print("Score:",score)
     screen=pygame.display.set_mode((602,626))
     screen.blit(Text,(250,300))
     ##screen.blit(pygame.font.SysFont("comicsansms", 16).render("Coming  Soon (Hopefully): Pacman level 2",True,(0,255,255)),(150,375))
